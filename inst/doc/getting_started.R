@@ -39,6 +39,7 @@ I = data.frame(FEDFUNDS, date = zoo::index(FEDFUNDS)) %>%
 Data = 
   dplyr::inner_join(Y, I, by = 'date') %>%
   dplyr::arrange(date) %>%
+  dplyr::filter(lubridate::year(date) < 2020) %>%
   na.omit()
 
 head(Data)
@@ -61,6 +62,7 @@ head(Data.rec)
     
 
 ## ---- message = F-------------------------------------------------------------
+
 # let sovereign determine economic states via k-means clustering
 Data.kmeans = 
   sovereign::regimes(
@@ -72,6 +74,7 @@ head(Data.kmeans)
 
 
 ## ---- message=F, warning=F, fig.show="hold", out.width="50%"------------------
+
 # estimate VAR
 var =
     sovereign::VAR(
@@ -87,25 +90,35 @@ sovereign::plot_forecast(var$forecasts[['H_1']])
 sovereign::plot_error(var$residuals[['H_1']])
 
 ## ---- message = F, warning=F, fig.align='center'------------------------------
+
 # estimate IRF
-irf =
+var.irf =
     sovereign::var_irf(
         var,
         bootstraps.num = 10,
         CI = c(0.05,0.95))
 
 # plot IRF
-sovereign::plot_irf(irf)
+sovereign::plot_irf(var.irf)
 
 ## ---- message = F, warning=F, fig.align='center'------------------------------
+
 # estimate forecast error variance decomposition
-fevd =
+var.fevd =
     sovereign::var_fevd(
         var,
         horizon = 10)
 
 # plot FEVD
-sovereign::plot_fevd(fevd)
+sovereign::plot_fevd(var.fevd)
+
+## ---- message = F, warning=F, fig.align='center'------------------------------
+
+# estimate historical decomposition
+var.hd = sovereign::var_hd(var)
+
+# plot HD
+sovereign::plot_hd(var.hd)
 
 ## ---- message=F, warning=F, fig.show="hold", out.width="50%"------------------
 
@@ -154,6 +167,15 @@ rvar.fevd =
 sovereign::plot_fevd(rvar.fevd[['regime_expansion']])
 # regime 2: recession rates (left panel)
 sovereign::plot_fevd(rvar.fevd[['regime_recession']])
+
+
+## ---- message=F, warning=F----------------------------------------------------
+
+# estimate historical decomposition
+rvar.hd = sovereign::rvar_hd(rvar)
+
+# plot hd
+sovereign::plot_hd(rvar.hd)
 
 
 ## ---- message=F, warning=F, fig.show="hold", out.width="50%"------------------
