@@ -13,10 +13,8 @@ rvar_hd(rvar)
 long form data.frames
 }
 \description{
-Estimate historical decomposition with contemporaneous impact
-restrictions via Cholesky decomposition - taking the variable ordering
-present in the RVAR object. Estimate one response function per unique
-state defined by the regime-dependent VAR.
+Estimate historical decomposition for RVARs with
+either short or 'IV-short' structural errors.
 }
 \examples{
 \donttest{

@@ -4,24 +4,36 @@
 \alias{rvar_irf}
 \title{Estimate regime-dependent impulse response functions}
 \usage{
-rvar_irf(rvar, horizon = 10, bootstraps.num = 100, CI = c(0.1, 0.9))
+rvar_irf(
+  rvar,
+  horizon = 10,
+  CI = c(0.1, 0.9),
+  bootstrap.type = "auto",
+  bootstrap.num = 100,
+  bootstrap.parallel = FALSE,
+  bootstrap.cores = -1
+)
 }
 \arguments{
 \item{rvar}{RVAR output}
 
 \item{horizon}{int: number of periods}
 
-\item{bootstraps.num}{int: number of bootstraps}
-
 \item{CI}{numeric vector: c(lower ci bound, upper ci bound)}
+
+\item{bootstrap.type}{string: bootstrapping technique to use ('auto', 'standard', or 'wild'); if auto then wild is used for IV or IV-short, else standard is used}
+
+\item{bootstrap.num}{int: number of bootstraps}
+
+\item{bootstrap.parallel}{boolean: create IRF draws in parallel}
+
+\item{bootstrap.cores}{int: number of cores to use in parallel processing; -1 detects and uses half the available cores}
 }
 \value{
-list of lists, each regime returns its own list with elements \code{irfs}, \code{ci.lower}, and \code{ci.upper}; all elements are long-form data.frames
+list of regimes, each with data.frame of columns \code{target}, \code{shock}, \code{horizon}, \code{response.lower}, \code{response}, \code{response.upper}
 }
 \description{
-Estimate impulse responses with contemporaneous impact restrictions via Cholesky decomposition -
-taking the variable ordering present in the VAR object. Estimate one response function per unique
-state defined by the regime-dependent VAR.
+Estimate regime-dependent impulse response functions
 }
 \examples{
 \donttest{
@@ -45,14 +57,14 @@ state defined by the regime-dependent VAR.
       lag.ic = 'BIC',
       lag.max = 4)
 
-# impulse response functions
-rvar.irf = sovereign::rvar_irf(rvar)
+ # impulse response functions
+ rvar.irf = sovereign::rvar_irf(rvar)
 
-# forecast error variance decomposition
-rvar.fevd = sovereign::rvar_fevd(rvar)
+ # forecast error variance decomposition
+ rvar.fevd = sovereign::rvar_fevd(rvar)
 
-# historical shock decomposition
-rvar.hd = sovereign::rvar_hd(rvar)
+ # historical shock decomposition
+ rvar.hd = sovereign::rvar_hd(rvar)
 
 }
 

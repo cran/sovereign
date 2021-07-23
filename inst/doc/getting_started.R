@@ -95,7 +95,7 @@ sovereign::plot_error(var$residuals[['H_1']])
 var.irf =
     sovereign::var_irf(
         var,
-        bootstraps.num = 10,
+        bootstrap.num = 10,
         CI = c(0.05,0.95))
 
 # plot IRF
@@ -144,7 +144,7 @@ rvar.irf =
     sovereign::rvar_irf(
         rvar,
         horizon = 10,
-        bootstraps.num = 10,
+        bootstrap.num = 10,
         CI = c(0.05,0.95))
 
 # plot IRF
