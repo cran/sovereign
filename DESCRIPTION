@@ -1,6 +1,6 @@
 Package: sovereign
 Title: State-Dependent Empirical Analysis
-Version: 1.2.0
+Version: 1.2.1
 Authors@R: 
     person(given = "Tyler J.",
            family = "Pike",
@@ -22,8 +22,8 @@ Imports: broom, dplyr, future, furrr, ggplot2, gridExtra, lmtest,
 Suggests: testthat, knitr, rmarkdown, quantmod, covr
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2021-07-22 23:41:06 UTC; tjpik
+Packaged: 2022-01-04 15:38:06 UTC; tjpik
 Author: Tyler J. Pike [aut, cre]
 Maintainer: Tyler J. Pike <tjpike7@gmail.com>
 Repository: CRAN
-Date/Publication: 2021-07-23 04:30:02 UTC
+Date/Publication: 2022-01-04 17:20:01 UTC
